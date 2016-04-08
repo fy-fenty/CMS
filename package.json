@@ -1,0 +1,32 @@
+{
+  "name": "cms",
+  "version": "1.0.0",
+  "description": "use angularjs and nodejs to implement cms",
+  "main": "index.js",
+  "scripts": {
+    "test": "none"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fy-fenty/CMS.git"
+  },
+  "keywords": [
+    "angularjs",
+    "nodejs",
+    "cms"
+  ],
+  "author": "fnety",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fy-fenty/CMS/issues"
+  },
+  "homepage": "https://github.com/fy-fenty/CMS#readme",
+  "dependencies": {
+    "angular": "^1.5.3",
+    "angular-resource": "^1.5.3",
+    "angular-route": "^1.5.3",
+    "bootstrap": "^3.3.6",
+    "jquery": "^2.2.3",
+    "mongodb": "^2.1.16"
+  }
+}
