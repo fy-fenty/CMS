@@ -2,9 +2,10 @@
   "name": "cms",
   "version": "1.0.0",
   "description": "use angularjs and nodejs to implement cms",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "test": "none"
+    "test": "none",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -25,7 +26,10 @@
     "angular": "^1.5.3",
     "angular-resource": "^1.5.3",
     "angular-route": "^1.5.3",
+    "body-parser": "^1.15.0",
     "bootstrap": "^3.3.6",
+    "cookie-parser": "^1.4.1",
+    "express": "^4.13.4",
     "jquery": "^2.2.3",
     "mongodb": "^2.1.16"
   }

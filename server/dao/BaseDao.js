@@ -1,28 +1,37 @@
 var MongoClient = require('mongodb').MongoClient;
-var BaseDao = {
-	db: null,
+var url = 'mongodb://localhost:27017/CMS';
 
-	initDb: function() {
-		var that = this;
-		MongoClient.connect(url, function(err, db) {
-			that.db = db;
-		});
-	},
+var BaseDao = function() {
 
-	insert: function(collection, obj, callback) {
-		collection.insert(obj, function(err, result) {
+};
+
+BaseDao.prototype.connect = function(callback) {
+	MongoClient.connect(url, function(err, db) {
+		if(err) {
+			console.log(err);
+		} else {
+			callback(db);
+		}
+	});
+};
+
+BaseDao.prototype.insert = function(collection, obj, callback) {
+	collection.insert(obj, function(err, result) {
+		if(err) {
+			console.log(err);
+		} else {
 			callback(result);
-		});
-	},
+		}
+	});
+};
 
-	find: function(collection, params, callback) {
-		collection.find(params || {}).toArray(function(err, result) {
-			if (err) {
-				console.log(err);
-			} else {
-				callback(result);
-			}
-		});
-	}
-}
+BaseDao.prototype.find = function(collection, params, callback) {
+	collection.find(params || {}).toArray(function(err, result) {
+		if (err) {
+			console.log(err);
+		} else {
+			callback(result);
+		}
+	});
+};
 module.exports = BaseDao;
