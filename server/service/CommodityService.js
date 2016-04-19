@@ -4,11 +4,9 @@ var CommodityService = function() {
 
 };
 
-CommodityService.prototype.findCommodity = function() {
+CommodityService.prototype.findCommodity = function(params, settings) {
 	var commodityDao = new CommodityDao();
-	commodityDao.list(function(data) {
-		
-	});
+	commodityDao.list(params, settings);
 };
 
 module.exports = CommodityService;

@@ -5,33 +5,36 @@ var BaseDao = function() {
 
 };
 
-BaseDao.prototype.connect = function(callback) {
+var processResult = function(err, obj, settings) {
+	console.log(settings);
+	if(err) {
+		if(settings.error) {
+			settings.error(err, obj);
+		}
+	} else {
+		if(settings.success) {
+			settings.success(obj);
+		}
+	}
+}
+
+BaseDao.prototype.connect = function(settings) {
 	MongoClient.connect(url, function(err, db) {
-		if(err) {
-			console.log(err);
-		} else {
-			callback(db);
-		}
+		processResult(err, db, settings);
 	});
 };
 
-BaseDao.prototype.insert = function(collection, obj, callback) {
+BaseDao.prototype.insert = function(db, collection, obj, settings) {
 	collection.insert(obj, function(err, result) {
-		if(err) {
-			console.log(err);
-		} else {
-			callback(result);
-		}
+		processResult(err, result, settings);
+		db.close();
 	});
 };
 
-BaseDao.prototype.find = function(collection, params, callback) {
+BaseDao.prototype.find = function(db, collection, params, settings) {
 	collection.find(params || {}).toArray(function(err, result) {
-		if (err) {
-			console.log(err);
-		} else {
-			callback(result);
-		}
+		processResult(err, result, settings);
+		db.close();
 	});
 };
 module.exports = BaseDao;
