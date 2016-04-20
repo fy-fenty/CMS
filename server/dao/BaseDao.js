@@ -32,7 +32,11 @@ BaseDao.prototype.insert = function(db, collection, obj, settings) {
 };
 
 BaseDao.prototype.find = function(db, collection, params, settings) {
-	collection.find(params || {}).toArray(function(err, result) {
+	var query = collection.find(params || {});
+	if(settings.byPage) {
+		query.skip(settings.page.skip).limit(settings.page.limit);
+	}
+	query.toArray(function(err, result) {
 		processResult(err, result, settings);
 		db.close();
 	});

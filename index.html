@@ -2,16 +2,71 @@
 <html ng-app='myapp'>
 	<head>
 		<title>Commidity Manage System</title>
-		<script src="static/angular/angular.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<link rel="stylesheet" type="text/css" href="static/bootstrap/dist/css/bootstrap.min.css">
+		<script src="static/jquery/dist/jquery.min.js"></script>
+		<script src="static/angular/angular.min.js"></script>
 		<script src="static/angular-resource/angular-resource.min.js"></script>
 		<script src="static/angular-route/angular-route.min.js"></script>
-		<script src="static/jquery/dist/jquery.min.js"></script>
+		<script src="static/bootstrap/dist/js/bootstrap.min.js"></script>
 		<script type="text/javascript">
-			var myapp = angular.module('myapp', []);
-			
+			var myapp = angular.module('myapp', ['ngResource', 'ngRoute']);
+			myapp.controller('CommodityList', function($scope, Commodity) {
+				$scope.page = 1;
+				$scope.query = function(page) {
+					Commodity.query({
+						page: page
+					}, function(datas, getResponseHeaders) {
+						$scope.datas = datas;
+						$scope.page = page;
+					});
+				};
+				$scope.query($scope.page);
+
+				$scope.prev = function() {
+					if($scope.page > 1) {
+						$scope.query($scope.page - 1);
+					}
+				}
+				$scope.next = function() {
+					$scope.query($scope.page + 1);
+				}
+			});
+			myapp.controller('CommodityDetail', function($scope, $routeParams, Commodity) {
+				Commodity.get({
+					name: $routeParams.name
+				}, function(data) {
+					$scope.phone = data;
+					$scope.mainImgUrl = data.images[0];
+				});
+				$scope.setImage = function(imageUrl) {
+					$scope.mainImgUrl = imageUrl;
+				}
+				$scope.prev = function() {
+					$('.carousel').carousel('prev');
+				};
+				$scope.next = function() {
+					$('.carousel').carousel('next');
+				};
+			});
+			myapp.factory('Commodity', ['$resource', function($resource) {
+				return $resource('/commodity/:name', {}, {});
+			}]);
+
+			myapp.config(['$routeProvider', function($routeProvider) {
+				$routeProvider.when('/commodity', {
+						templateUrl: '/static/module/commodityList.html',
+						controller: 'CommodityList'
+					})
+					.when('/commodity/:name', {
+						templateUrl: '/static/module/commodityDetail.html',
+						controller: 'CommodityDetail'
+					})
+					.otherwise({redirectTo: '/commodity'});
+			}]);
 		</script>
 	</head>
 	<body>
-		
+		<div ng-view></div>
 	</body>
 </html>

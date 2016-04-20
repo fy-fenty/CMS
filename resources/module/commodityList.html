@@ -1,0 +1,23 @@
+<div class='container'>	
+	<nav class='pull-right'>
+	  	<ul class="pagination">
+	    	<li><a href="javascript:void(0)" ng-click='prev()' aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+	    	<li><a href="javascript:void(0)" ng-click='query(1)'>1</a></li>
+	    	<li><a href="javascript:void(0)" ng-click='query(2)'>2</a></li>
+	    	<li><a href="javascript:void(0)" ng-click='query(3)'>3</a></li>
+	    	<li><a href="javascript:void(0)" ng-click='query(4)'>4</a></li>
+	    	<li><a href="javascript:void(0)" ng-click='next()' aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>
+	  	</ul>
+	</nav>
+	<h3>当前页码：{{page}}</h3>
+	<table class='table table-hover'>
+		<tbody>
+			<tr ng-repeat='data in datas'>
+				<td>
+					<a href='#/commodity/{{data.name}}'><img class='img-responsive img-rounded' ng-src='/static/{{data.images[0]}}'></a>
+				</td>
+				<td><p class='text-justify'>{{data.description}}</p></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
